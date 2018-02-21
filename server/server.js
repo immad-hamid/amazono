@@ -17,20 +17,19 @@ mongoose.connect(config.database, (err) => {
         console.log('Connected to the database');
     }
 });
+
 // using body parser for json
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 // adding middleware
 app.use(morgan('dev'));
+
 // adding cors to communicate with the client
 app.use(cors());
 
-// test route
-app.get('/', (req, res, next) => {
-    res.json({
-        user: 'Immad Hamid'
-    });
-})
+const userRoutes = require('./routes/account');
+app.use('/api/accounts', userRoutes);
 
 // the port at which the server would be running
 app.listen(3030, err => {
